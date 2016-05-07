@@ -239,7 +239,7 @@ streznik.post('/stranka', function(zahteva, odgovor) {
   var form = new formidable.IncomingForm();
   
   form.parse(zahteva, function (napaka1, polja, datoteke) {
-    zahteva.session.prijavljenaStranka = polja.seznamStrank;
+    zahteva.session.prijavljenaStranka = polja.seznamStrank;  
     odgovor.redirect('/')
   });
   
