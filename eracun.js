@@ -48,8 +48,7 @@ function davcnaStopnja(izvajalec, zanr) {
 // Prikaz seznama pesmi na strani
 streznik.get('/', function(zahteva, odgovor) {
   
-  if(!zahteva.session.prijavljenaStranka)
-+    odgovor.redirect('/prijava'); 
+  
 +   
 +  
 + 
@@ -240,7 +239,7 @@ streznik.post('/stranka', function(zahteva, odgovor) {
   var form = new formidable.IncomingForm();
   
   form.parse(zahteva, function (napaka1, polja, datoteke) {
-    zahteva.session.prijavljenaStranka = polja.seznamStrank;  
+     
     odgovor.redirect('/')
   });
   
@@ -249,7 +248,7 @@ streznik.post('/stranka', function(zahteva, odgovor) {
 // Odjava stranke
 streznik.post('/odjava', function(zahteva, odgovor) {
     odgovor.redirect('/prijava') 
-    zahteva.session.prijavljenaStranka= null; //dodana koda
+    
 })
 
 
