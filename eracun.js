@@ -197,23 +197,29 @@ streznik.post('/izpisiRacunBaza', function(zahteva, odgovor) {
   })
 })
 
-// Izpis računa v HTML predstavitvi ali izvorni XML obliki
 streznik.get('/izpisiRacun/:oblika', function(zahteva, odgovor) {
-  pesmiIzKosarice(zahteva, function(pesmi) {
-    if (!pesmi) {
-      odgovor.sendStatus(500);
-    } else if (pesmi.length == 0) {
-      odgovor.send("<p>V košarici nimate nobene pesmi, \
-        zato računa ni mogoče pripraviti!</p>");
-    } else {
-      odgovor.setHeader('content-type', 'text/xml');
-      odgovor.render('eslog', {
-        vizualiziraj: zahteva.params.oblika == 'html' ? true : false,
-        postavkeRacuna: pesmi
-      })  
-    }
+   pesmiIzKosarice(zahteva, function(pesmi) {
+     if (!pesmi) {
+       odgovor.sendStatus(500);
+     } else if (pesmi.length == 0) {
+        odgovor.send("<p>V košarici nimate nobene pesmi, \
+          zato računa ni mogoče pripraviti!</p>");
+      } else {
+ //      odgovor.setHeader('content-type', 'text/xml');
+ //      odgovor.render('eslog', {
+ //        vizualiziraj: zahteva.params.oblika == 'html' ? true : false,
+ //        postavkeRacuna: pesmi
+ //      })  
+ //4to podnalogo , dodana koda
+       vrniStranke(function(napaka, stranke) {
+         odgovor.setHeader('content-type', 'text/xml');
+          odgovor.render('eslog', {
+                   vizualiziraj: zahteva.params.oblika == 'html' ? true : false,
+                   postavkeRacuna: pesmi, stranka:stranke[zahteva.session.stranka -1]});  
+         });
+      }
+    })
   })
-})
 
 // Privzeto izpiši račun v HTML obliki
 streznik.get('/izpisiRacun', function(zahteva, odgovor) {
